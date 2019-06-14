@@ -73,6 +73,8 @@ public class CounterAdapter extends BaseAdapter {
         //ImageView img = (ImageView) linearLayout.findViewById(R.id.imageView);
 
         Button button = linearLayout.findViewById(R.id.button);
+        Button buttonMoins = linearLayout.findViewById(R.id.buttonMoins);
+
         txtCounterName.setText(currentcounter.getTitle());
         txtCounterCount.setText(currentcounter.getCountString());
 
@@ -92,6 +94,20 @@ public class CounterAdapter extends BaseAdapter {
             }
         });
 
+        buttonMoins.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("!!!!CLICK ON BUTTON + !!!!!");
+                //HERE GET ON http://192.168.1.20:8080/counter/web/increment?id=currentcounter.getId()
+                //notifyDataSetChanged();
+                new CounterTaskIncrement(currentcounter).execute("decrement"); // decrement, reset
+                int newval = currentcounter.getCount();
+                currentcounter.setCount(newval - 1); // -1, 0
+                finalCounterCount.setText(currentcounter.getCountString());
+                notifyDataSetChanged();
+            }
+        });
+
 
         //sets the text for item name and item description from the current item object
         // txtcounterId.setText(currentcounter.getId());
@@ -101,4 +117,5 @@ public class CounterAdapter extends BaseAdapter {
         // retourne la ligne
         return linearLayout;
     }
+
 }

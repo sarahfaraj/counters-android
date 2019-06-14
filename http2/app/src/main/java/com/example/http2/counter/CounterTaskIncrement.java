@@ -28,9 +28,16 @@ public class CounterTaskIncrement extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
         String result;
+        String bb;
         String path = null;
         System.out.println(params[0]);
-        path = Utils.BASE_URL + "/counter/web/exec?title=" + this.counter.getTitle() + "&action=" + params[0];
+
+        if(params[0].equals("increment"))
+            bb="%2B";  //symbôle pour + (increment)
+        else
+            bb="-";   //le - fonctionne
+        path = Utils.BASE_URL + "/counter/exec?id=" + this.counter.getId() + "&button=" + bb;
+                        //this.counter.gertTitle() + "action=" = params[0];
         result = Utils.sendHttp(path);
         System.out.println("RESULT1=" + result);
         return result;
